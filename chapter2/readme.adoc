@@ -1,0 +1,52 @@
+= Chapter 2
+
+== 2.1
+
+Show Docker CLI commands
+
+== 2.2
+
+```
+docker container run -it jboss/wildfly
+docker container run -d jboss/wildfly
+docker container run -d --name web jboss/wildfly
+docker container ps
+docker container stop web
+docker container stop {cid}
+docker container rm web
+docker container rm -f web
+```
+== 2.3
+
+=== Expose ports
+
+```
+docker container run -d --name web -P jboss/wildfly
+docker container run ps
+```
+
+Access WildFly home page in browser on the exposed port
+
+=== Expose ports
+
+```
+docker container stop web
+docker container rm web
+docker container run -d --name web -p 8080:8080 jboss/wildfly
+docker container logs web
+```
+
+Access WildFly home page in browser on 8080
+
+
+=== Volume mapping
+
+```
+docker container rm -f web
+docker container run -d --name web -p 8080:8080 -v /Users/arungupta/workspaces/docker-for-java/ch2/webapp.war:/opt/jboss/wildfly/standalone/deployments/webapp.war jboss/wildfly
+docker container logs web
+curl http://localhost:8080/webapp/resources/persons
+```
+
+=== 2.4 
+
