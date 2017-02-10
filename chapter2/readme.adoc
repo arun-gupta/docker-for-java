@@ -1,10 +1,10 @@
 = Chapter 2
 
-== 2.1
+== 2.1 Docker CLI
 
 Show Docker CLI commands
 
-== 2.2
+== 2.2 Run your first Docker container
 
 ```
 docker container run -it jboss/wildfly
@@ -12,11 +12,14 @@ docker container run -d jboss/wildfly
 docker container run -d --name web jboss/wildfly
 docker container ps
 docker container stop web
+docker container start web
 docker container stop {cid}
 docker container rm web
 docker container rm -f web
+docker container run -it jboss/wildfly bash
 ```
-== 2.3
+
+== 2.3 Run Docker container (ports & volumes)
 
 === Expose ports
 
@@ -48,5 +51,91 @@ docker container logs web
 curl http://localhost:8080/webapp/resources/persons
 ```
 
-=== 2.4 
+`webapp.war` is used from https://github.com/javaee-samples/javaee7-simple-sample/releases/download/v1.10/javaee7-simple-sample-1.10.war.
+
+=== 2.4 Create first Docker image
+
+. Dockerfile syntax
+. Create a new directory
+. Talk about build context, `.dockerignore`
+
+```
+FROM ubuntu
+
+CMD echo "Hello world"
+```
+
+. Build image: `docker image build -t helloworld .`
+. List image: `docker image ls`
+. Run container: `docker container run helloworld`
+
+=== 2.5 Create first Java Docker image
+
+```
+FROM openjdk
+
+CMD java -version
+```
+
+. Build image: `docker image build -t hellojava .`
+. List image and show the size: `docker image ls hellojava`
+. Run container: `docker container run hellojava`
+
+```
+FROM fabric8/java-alpine-openjdk8-jdk
+
+CMD java -version
+```
+
+. Build image: `docker image build -t hellojava:2 .`
+. Talk about image tagging
+. List image and show/compare the size: `docker image ls hellojava:2`
+. Run container: `docker container run hellojava:2`
+
+=== 2.6 Copy files in the Docker image
+
+. Explain `COPY` vs `ADD`
+
+```
+FROM jboss/wildfly
+
+COPY webapp.war /opt/jboss/wildfly/standalone/deployments/webapp.war
+```
+
+. Build image: `docker image build -t helloweb .`
+. Run container: `docker container run -d --name web -p 8080:8080 helloweb`
+. Access application: `curl http://localhost:8080/webapp/resources/persons`
+
+=== 2.7 Run JAR files from the Docker image
+
+```
+FROM fabric8/java-alpine-openjdk8-jdk
+
+COPY myapp/target/myapp-1.0-SNAPSHOT.jar /deployments/
+
+RUN java -jar /deployments/myapp-1.0-SNAPSHOT.jar
+```
+
+. Build image: `docker image build -t hellojava:3 .`
+. Run container: `docker container run hellojava:3`
+. Change Java application (change "Hello" to "Howdy") and create new JAR file
+. Build new Docker image: `docker image build -t hellojava:4 .`
+. Run new Docker container: `docker container run hellojava:4`
+. Show updated changes
+
+=== 2.8 Other Dockerfile instructions
+
+=== 2.9 Docker and Maven
+
+. Check out https://github.com/arun-gupta/docker-java-sample
+. Run using CLI: `mvn clean package exec:java`
+. Show `pom.xml` and explain DMP
+. Build image: `mvn package -Pdocker`
+. Show image: `docker image ls`
+. Run container: `mvn install -Pdocker`
+
+=== 2.10 Docker and Gradle
+
+
+
 
