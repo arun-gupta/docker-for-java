@@ -57,7 +57,7 @@ curl http://localhost:8080/webapp/resources/persons
 
 . Dockerfile syntax
 . Create a new directory
-. Talk about build context, `.dockerignore`
+. Explain build context, `.dockerignore`
 
 ```
 FROM ubuntu
@@ -68,6 +68,8 @@ CMD echo "Hello world"
 . Build image: `docker image build -t helloworld .`
 . List image: `docker image ls`
 . Run container: `docker container run helloworld`
+. Explain `--squash`
+. Explain `--compress`
 
 === 2.5 Create first Java Docker image
 
