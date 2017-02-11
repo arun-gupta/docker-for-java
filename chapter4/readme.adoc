@@ -1,4 +1,101 @@
 = Chapter 4
 
-== 4.1 Introduction to Swarm Mode
+== 4.1 Introduction to Swarm mode
+
+Slides only
+
+. Single node swarm: `docker swarm init`
+. Show information: `docker info`
+
+== 4.2 Create multi-node Swarm mode cluster using Docker Machine
+
+Slides
+
+. `docker-machine -v`
+. Use `swarm-machines.sh` to pre-create 6 Docker Machines `manager1`, `manager2`, `manager3`, `worker`, `worker2`, `worker3`
+. Initialize swarm mode on `manager`:
++
+```
+docker-machine ssh manager1 \
+        "docker swarm init \
+        --listen-addr $(docker-machine ip manager1) \
+        --advertise-addr $(docker-machine ip manager1)"
+```
++
+. Show list of nodes: `docker-machine ssh manager1 "docker node ls"`
+. Get manager token: `docker-machine ssh manager1 "docker swarm join-token manager -q"`
+. Get worker token: `docker-machine ssh manager1 "docker swarm join-token worker -q"`
+. Manager 2 joins cluster:
++
+```
+docker-machine ssh manager2 \
+        "docker swarm join \
+        --token `docker-machine ssh manager1 "docker swarm join-token manager -q"` \
+        --listen-addr $(docker-machine ip manager2) \
+        --advertise-addr $(docker-machine ip manager2) \
+        $(docker-machine ip manager1)"
+```
++
+. Show list of nodes: `docker-machine ssh manager1 "docker node ls"`
+. Manager 3 joins cluster:
++
+```
+docker-machine ssh manager3 \
+        "docker swarm join \
+        --token `docker-machine ssh manager1 "docker swarm join-token manager -q"` \
+        --listen-addr $(docker-machine ip manager3) \
+        --advertise-addr $(docker-machine ip manager3) \
+        $(docker-machine ip manager1)"
+```
++
+. Show list of nodes: `docker-machine ssh manager1 "docker node ls"`
+. Worker 1 join cluster:
++
+```
+docker-machine ssh worker1 \
+        "docker swarm join \
+        --token `docker-machine ssh manager1 "docker swarm join-token worker -q"` \
+        --listen-addr $(docker-machine ip worker1) \
+        --advertise-addr $(docker-machine ip worker1) \
+        $(docker-machine ip manager1)"
+```
++
+. Show list of nodes: `docker-machine ssh manager1 "docker node ls"`
+. Worker 2 join cluster:
++
+```
+docker-machine ssh worker2 \
+        "docker swarm join \
+        --token `docker-machine ssh manager1 "docker swarm join-token worker -q"` \
+        --listen-addr $(docker-machine ip worker2) \
+        --advertise-addr $(docker-machine ip worker2) \
+        $(docker-machine ip manager1)"
+```
++
+. Show list of nodes: `docker-machine ssh manager1 "docker node ls"`
+. Worker 3 join cluster:
++
+```
+docker-machine ssh worker3 \
+        "docker swarm join \
+        --token `docker-machine ssh manager1 "docker swarm join-token worker -q"` \
+        --listen-addr $(docker-machine ip worker3) \
+        --advertise-addr $(docker-machine ip worker3) \
+        $(docker-machine ip manager1)"
+```
++
+. Show list of nodes: `docker-machine ssh manager1 "docker node ls"`
+. Show cluster information: `docker-machine ssh manager1 "docker info"`
+
+== 4.3 Create multi-node Swarm mode cluster on AWS/Azure
+
+Slides
+
+. Launch the template and explain the creation and parameters
+. Setup SSH tunnel: `ssh -NL localhost:2374:/var/run/docker.sock docker@<master>`
+. Show cluster information: `docker -H localhost:2374 info`
+
+
+
+
 
