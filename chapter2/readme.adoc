@@ -125,6 +125,8 @@ RUN java -jar /deployments/myapp-1.0-SNAPSHOT.jar
 
 === 2.8 Other Dockerfile instructions
 
+Slides only
+
 === 2.9 Docker and Maven
 
 . Check out https://github.com/arun-gupta/docker-java-sample
