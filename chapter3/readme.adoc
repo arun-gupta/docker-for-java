@@ -1,0 +1,75 @@
+= Chapter 3
+
+== 2.1 Introduction to Docker Compose
+
+. Talk through slides
+. `docker-compose -v`
+. `docker-compose --help`. Explain `up`, `ps`, `down`, `scale`, `restart`, `port`
+. Sample `docker-compose.yml`
+
+```
+version: "3"
+services:
+  web:
+   image: jboss/wildfly
+   volumes:
+     - ~/deployments:/opt/jboss/wildfly/standalone/deployments
+   ports:
+     - 8080:8080
+```
+
+Compare with Docker CLI.
+
+Run the commands:
+
+```
+docker-compose up -d
+docker-compose logs -f
+cp ~/workspaces/docker-for-java/chapter2/webapp.war ~/deployments
+curl http://localhost:8080/webapp/resources/persons
+docker-compose down
+```
+
+== 2.2 Docker Compose Options
+
+=== Project name
+
+By default, service names is <project-name>_<service-name>_<service-number>
+Start using `docker-compose -p myapp up -d`
+`docker-compose ps` shows no services
+`docker-compose -p test ps` shows services
+
+=== Override
+
+Copy the following in `docker-compose.override.yml`:
+
+```
+version: "3"
+services:
+  web:
+   ports:
+     - 9080:8080
+```
+
+. Run application: `docker-compose --verbose up -d`. Explain how the files picked are shown.
+. App now accessible at curl http://localhost:9080/webapp/resources/persons
+. Shutdown using `docker-compose down`
+
+=== Multiple files
+
+Copy the following in `docker-compose-db.yml`:
+
+```
+version: "3"
+services:
+  db:
+   image: arungupta/couchbase
+   ports:
+     - 8091:8091
+```
+
+Run the command: `docker-compose -f docker-compose.yml -f docker-compose-db.yml up -d`
+See services: `docker-compose -f docker-compose.yml -f docker-compose-db.yml ps`
+Shutdown: `docker-compose -f docker-compose.yml -f docker-compose-db.yml down`
+
+
