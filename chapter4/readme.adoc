@@ -147,6 +147,8 @@ Slides
 
 === 4.8 Multi-container application on multi-host cluster
 
+Only to be used with Docker for AWS:
+
 ```
 version: '3'
 services:
@@ -168,7 +170,12 @@ services:
       - 11210:11210
 ```
 
-`docker stack deploy --compose-file=docker-compose.yml webapp`
-
+. `docker stack deploy --compose-file=docker-compose.yml webapp`
+. `docker stack ls`
+. `docker service ls`
+. `docker service ps webapp_web` - show the node where the container is running
+. `docker service ps webapp_db` - show the node where the container is running
+. `docker service logs webapp_web` - only works on experimental, verified using `docker info`
+. Access the application `curl -v http://localhost:8080/airlines/resources/airline`
 
 
