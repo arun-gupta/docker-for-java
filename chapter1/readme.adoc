@@ -1,0 +1,21 @@
+= Chapter 1
+
+== 1.1 Introduction to Docker
+
+Slides only
+
+== 1.2 Docker and Java
+
+Slides only
+
+== 1.3 Docker Workflow
+
+Slides only
+
+== 1.4 Getting Started with Docker
+
+. Create Docker Machine: `docker-machine create -d virtualbox mymachine`
+.. Talk about `boot2docker.iso`
+. Show `env | grep DOCKER`
+. Setup machine: `eval $(docker-machine env mymachine)`
+. Show `env | grep DOCKER`

@@ -12,7 +12,7 @@ Slides only
 Slides
 
 . `docker-machine -v`
-. Use `swarm-machines.sh` to pre-create 6 Docker Machines `manager1`, `manager2`, `manager3`, `worker`, `worker2`, `worker3`
+. Pre-create 6 Docker Machines using `swarm-machines.sh`
 . Initialize swarm mode on `manager`:
 +
 ```
@@ -141,11 +141,7 @@ Slides
 . Check status every 5 secs: `docker service ps webapp`
 . Access the application http://192.168.99.100:8080/app/index.jsp and show red background
 
-=== 4.7 Node maintenance, label/constraints, global service
-
-Slides
-
-=== 4.8 Multi-container application on multi-host cluster
+=== 4.7 Multi-container application on multi-host cluster
 
 Only to be used with Docker for AWS:
 
@@ -177,5 +173,9 @@ services:
 . `docker service ps webapp_db` - show the node where the container is running
 . `docker service logs webapp_web` - only works on experimental, verified using `docker info`
 . Access the application `curl -v http://localhost:8080/airlines/resources/airline`
+
+=== 4.8 Node maintenance, label/constraints, global service
+
+Slides
 
 

@@ -140,6 +140,12 @@ Slides only
 
 === 2.10 Docker and Gradle
 
-??
+. Check out https://github.com/arun-gupta/docker-java-sample
+. Run using CLI: `./gradlew build run`
+. Show `build.gradle` and explain Docker Gradle Plugin
+. Build image: `./gradlew dockerBuildImage`
+. Show image: `docker image ls`
+. Run container: `./gradlew startContainer`
+
 
 
