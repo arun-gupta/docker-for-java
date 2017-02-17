@@ -1,9 +1,11 @@
 = Chapter 5
 
-== 5.1 Stateful Containers
+== 5.1 Couchbase cluster using services
 
-== 5.2 Couchbase cluster using services
+https://blog.couchbase.com/stateful-docker-containers-portworx-couchbase/
 
 == 5.3 Docker Volume Plugin
+
+https://blog.couchbase.com/stateful-docker-containers-portworx-couchbase/
 
 == Monitoring??
