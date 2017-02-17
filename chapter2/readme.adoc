@@ -148,4 +148,37 @@ Slides only
 . Run container: `./gradlew startContainer`
 
 
+=== 2.11 Tag and Share Docker Image
+
+. Show tags at https://hub.docker.com/r/library/couchbase/
+. Docker image name format: `<registry>/repo_name:tag`
+.. Default value of `<registry>` is `docker.io`
+. Use Dockerfile:
++
+```
+FROM fabric8/java-alpine-openjdk8-jdk
+
+CMD java -version
+```
++
+. Create image with no name or tag
+.. Build image: `docker image build .`
+.. Use `docker image ls` to show the list of images, particular `<none>`:`<none>` for this image
+. Create image with no name and default `latest` tag
+.. Build image: `docker image build -t hellojava .`
+.. Check images: `docker image ls`, show default `latest` tag
+. Create image with name and explicit tag
+.. Build image: `docker image build -t hellojava:1 .`
+.. Check images using `docker image ls`, show no `latest` tag
+. Tag versioned image with `latest` tag
+. Tag the image using `docker image tag hellojava:1 hellojava:latest`
+. Check images using `docker image ls`, show both tags are available
+. Push image without namespace to Docker Hub
+.. `docker push hellojava:latest` and show the error
+.. Tag image: `docker tag hellojava:latest arungupta/hellojava:latest`
+.. Push to Docker Hub: `docker image push arungupta/hellojava:latest`
+. Push to local registry
+.. Run registry: `docker run -d -p 5000:5000 --restart always --name registry registry:2.6.0`
+.. Tag image for local registry: `docker tag hellojava:latest localhost:5000/arungupta/hellojava:latest`
+.. Push to local registry: `docker push localhost:5000/arungupta/hellojava:latest`
 
