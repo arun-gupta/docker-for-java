@@ -2,10 +2,106 @@
 
 == 5.1 Couchbase cluster using services
 
+Follow the steps in blog: https://blog.couchbase.com/couchbase-cluster-docker/
+
+== 5.2 Persistent Storage with Docker containers
+
+=== Docker Volume Plugin
+
 https://blog.couchbase.com/stateful-docker-containers-portworx-couchbase/
 
-== 5.3 Docker Volume Plugin
+Setup EC2 instance:
 
-https://blog.couchbase.com/stateful-docker-containers-portworx-couchbase/
+. Ubuntu 14.04, `m3.medium`
+.. Add `8091` to inbound rules
+. Login to EC2 instance: `ssh -i ~/.ssh/arun-cb-west1.pem ubuntu@<public-ip>`
+. Update: `sudo apt-get update`
+. Install Docker: `curl -sSL https://get.docker.com/ | sh`
+. Enable non-root access: `sudo usermod -aG docker ubuntu`
+. Logout and log back in
 
-== Monitoring??
+Follow steps from the blog
+
+== 5.3 Monitoring 101
+
+=== Docker CLI
+
+. `docker container stats` - You can use the `docker stats` command to live stream a container’s runtime metrics. The command supports CPU, memory usage, memory limit, and network IO metrics.
+. See the list of running containers using `docker container ls` and show stats for one container only
+. `docker container stats <name>`
+. `docker stats --format "{{.Container}}: {{.CPUPerc}}"`
+. `docker stats --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}"`
+. `docker container stats --no-stream`
+
+=== Docker Remote API
+
+. `curl --unix-socket /var/run/docker.sock http://docker/containers/<name>/stats`
+
+=== Events
+
+. `docker system events`
+. In a different tab, kill existing container using `docker container rm -f <name>`
+. Show the list of events
+. Start a new container
+. Show the list of events
+
+== 5.4 Monitoring 201
+
+=== Prometheus endpoint
+
+=== cAdvisor
+
+. Run `cAdvisor`
++
+```
+docker run \
+  -d \
+  --name=cadvisor \
+  -p 8080:8080 \
+  --volume=/var/run:/var/run:rw \
+  --volume=/sys:/sys:ro \
+  --volume=/var/lib/docker/:/var/lib/docker:ro \
+  google/cadvisor:latest
+```
++
+. Show dashboard at http://localhost:8080
+.. Explain CPU and Memory isolation
+.. Explain CPU, Memory, Network, Filesystem usage
+. Start Couchbase container:
++
+```
+docker run \
+  -d \
+  --name db \
+  -p 8091-8093:8091-8093 \
+  arungupta/couchbase
+```
++
+. Show dashboard again and dig into the sub-container
+. Connect CBQ: 
++
+```
+docker run \
+  -it \
+  --link db:db \
+  arungupta/couchbase \
+  cbq \
+  -u Administrator \
+  -p password \
+  --engine http://db:8093
+```
++
+. Show Couchbase Web Console at http://localhost:8091
+. Create a new bucket `docker`
+. Create primary index in Query tab: `create primary index on docker;`
+. Select documents from the bucket `select * from docker;`
+. Show dashboard again
+
+== 5.4 Monitoring using Sysdig
+
+=== DUCP
+
+=== Sysdig
+
+
+
