@@ -112,7 +112,7 @@ Follow steps from the blog
 . Start a new container
 . Show the list of events
 
-== 5.4 Monitoring using Prometheus and cAdvisor
+== 5.5 Monitoring Docker using Prometheus and cAdvisor
 
 === Prometheus endpoint
 
@@ -164,11 +164,11 @@ docker run \
 . Select documents from the bucket `select * from docker;`
 . Show dashboard again
 
-== 5.4 Monitoring using Sysdig
+== 5.6 Monitoring Docker using DUCP and Sysdig
 
 === DUCP
 
 === Sysdig
 
-
+Follow the steps from https://github.com/arun-gupta/labs/blob/sysdig/developer-tools/java/chapters/ch10-sysdig.adoc
 
