@@ -6,7 +6,74 @@ Follow the steps in blog: https://blog.couchbase.com/couchbase-cluster-docker/
 
 == 5.2 Persistent Storage with Docker containers
 
-=== Docker Volume Plugin
+=== Implicit per-container storage
+
+. Terminal1: Run Couchbase container: `docker container run -d --name db arungupta/couchbase`
+. Check volume mounts: `docker inspect --format '{{json .Mounts }}' db  | jq`
+.. Show `/opt/couchbase/var` is mapped to the implicit storage
+. Check the mounted volume: `docker container inspect --format='{{range .Mounts}}{{.Source}}{{end}}' db`
+. Terminal2: Log into Docker for Mac VM:
++
+```
+docker run -it --privileged --pid=host debian nsenter -t 1 -m -u -n -i sh
+```
++
+.. `debian` image has `nsenter`
+.. `--pid=host` means enter the process space of the VM running Docker For Mac
+.. `sh` says to run a shell there
++
+
+. Show `ls <volume-dir>`
+. Terminal1: Stop container: `docker container stop db`
+. Remove container, including the volume: `docker container rm -v db`
+. Terminal2: Show that the volume does not exist any more
+
+=== Explicit per-container storage
+
+. Create a new volume: `docker volume create my_couchbase`
+. Check the list of volumes: `docker volume ls`
+. Get more details about the volume: `docker volume inspect my_couchbase`
+. Create a Couchbase container using this volume:
++
+```
+docker container run \
+  -d \
+  --name db \
+  -p 8091-8093:8091-8093 \
+  -v my_couchbase:/opt/couchbase/var \
+  arungupta/couchbase
+```
++
+. Check the volume mount again: `docker inspect --format '{{json .Mounts }}' db  | jq`
+.. Show how the newly created volume is used here
+. Terminate the container: `docker container rm -f db`
+. Delete the volume explicitly: `docker volume rm my_couchbase`
+
+=== Per-host storage
+
+. Run Couchbase container
++
+```
+docker container run \
+  -d \
+  --name db \
+  -p 8091-8093:8091-8093 \
+  -v ~/couchbase:/opt/couchbase/var \
+  arungupta/couchbase
+```
++
+. Check volume mounts: `docker inspect --format '{{json .Mounts }}' db  | jq`
+.. Show `/opt/couchbase/var` is mapped to the explicit directory
+. Show data in `~/couchbase`
+. Login to Couchbase Web Console at http://localhost:8091
+. Create a new bucket
+. Kill the container: `docker container rm -f db`
+. Restart the container using previous command
+. Access Couchbase Web Console and show that the bucket still exists
+
+== 5.3 Docker Volume Plugin
+
+Talk through slides
 
 https://blog.couchbase.com/stateful-docker-containers-portworx-couchbase/
 
@@ -22,7 +89,7 @@ Setup EC2 instance:
 
 Follow steps from the blog
 
-== 5.3 Monitoring 101
+== 5.4 Monitoring Docker using CLI
 
 === Docker CLI
 
