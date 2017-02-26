@@ -9,12 +9,13 @@ Show Docker CLI commands
 ```
 docker container run -it jboss/wildfly
 docker container run -d jboss/wildfly
+docker container ls
+docker container stop {name}
+docker container rm {name}
 docker container run -d --name web jboss/wildfly
-docker container ps
+docker container ls
 docker container stop web
 docker container start web
-docker container stop {cid}
-docker container rm web
 docker container rm -f web
 docker container run -it jboss/wildfly bash
 ```
@@ -25,7 +26,7 @@ docker container run -it jboss/wildfly bash
 
 ```
 docker container run -d --name web -P jboss/wildfly
-docker container run ps
+docker container run ls
 ```
 
 Access WildFly home page in browser on the exposed port
@@ -46,7 +47,7 @@ Access WildFly home page in browser on 8080
 
 ```
 docker container rm -f web
-docker container run -d --name web -p 8080:8080 -v /Users/arungupta/workspaces/docker-for-java/ch2/webapp.war:/opt/jboss/wildfly/standalone/deployments/webapp.war jboss/wildfly
+docker container run -d --name web -p 8080:8080 -v `pwd`/webapp.war:/opt/jboss/wildfly/standalone/deployments/webapp.war jboss/wildfly
 docker container logs web
 curl http://localhost:8080/webapp/resources/persons
 ```
@@ -115,12 +116,14 @@ FROM fabric8/java-alpine-openjdk8-jdk
 
 COPY myapp/target/myapp-1.0-SNAPSHOT.jar /deployments/
 
-RUN java -jar /deployments/myapp-1.0-SNAPSHOT.jar
+CMD java -jar /deployments/myapp-1.0-SNAPSHOT.jar
 ```
 
+. Create JAR file: `mvn package`
 . Build image: `docker image build -t hellojava:3 .`
 . Run container: `docker container run hellojava:3`
-. Change Java application (change "Hello" to "Howdy") and create new JAR file
+. Change Java application (change "Hello" to "Howdy")
+. Create new JAR file using `mvn package`
 . Build new Docker image: `docker image build -t hellojava:4 .`
 . Run new Docker container: `docker container run hellojava:4`
 . Show updated changes
