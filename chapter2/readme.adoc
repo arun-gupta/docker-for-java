@@ -85,7 +85,7 @@ CMD java -version
 . Run container: `docker container run hellojava`
 
 ```
-FROM fabric8/java-alpine-openjdk8-jdk
+FROM openjdk:jdk-alpine
 
 CMD java -version
 ```
@@ -112,7 +112,7 @@ COPY webapp.war /opt/jboss/wildfly/standalone/deployments/webapp.war
 === 2.7 Run JAR files from the Docker image
 
 ```
-FROM fabric8/java-alpine-openjdk8-jdk
+FROM openjdk:jdk-alpine
 
 COPY myapp/target/myapp-1.0-SNAPSHOT.jar /deployments/
 
@@ -153,7 +153,7 @@ Slides only
 
 === 2.11 Tag and Share Docker Image
 
-. Show tags at https://hub.docker.com/r/library/couchbase/
+. Show tags at https://hub.docker.com/_/openjdk/
 . Docker image name format: `<registry>/repo_name:tag`
 .. Default value of `<registry>` is `docker.io`
 
@@ -211,12 +211,13 @@ CMD echo "This is v2"
 ==== Push image to Docker Hub
 
 . Push the image without namespace
-.. `docker push hellojava:latest` and show the error
+.. Login to Docker: `docker login`
+.. `docker push helloworld:latest` and show the error
 . Push the image in namespace
-.. Tag image: `docker tag hellojava:latest arungupta/hellojava:latest`
-.. Push to Docker Hub: `docker image push arungupta/hellojava:latest`
+.. Tag image: `docker tag helloworld:latest arungupta/helloworld:latest`
+.. Push to Docker Hub: `docker image push arungupta/helloworld:latest`
 . Push to local registry
 .. Run registry: `docker run -d -p 5000:5000 --restart always --name registry registry:2.6.0`
-.. Tag image for local registry: `docker tag hellojava:latest localhost:5000/arungupta/hellojava:latest`
-.. Push to local registry: `docker push localhost:5000/arungupta/hellojava:latest`
+.. Tag image for local registry: `docker tag helloworld:latest localhost:5000/arungupta/helloworld:latest`
+.. Push to local registry: `docker push localhost:5000/arungupta/helloworld:latest`
 
