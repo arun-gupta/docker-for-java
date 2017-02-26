@@ -109,15 +109,20 @@ Slides
 
 === Container failure
 
-. Show the list of containers: `docker container ls`
-. Kill a container: `docker container rm {cid}`
-. Show how desired vs actual is reconciled: `docker container ls`
+. SSH to `manager1`: `docker-machine ssh manager1`
+. See the nodes where containers are running: `docker service ps web`
+. SSH to a node where the container is running. Show the list of containers: `docker container ls`
+. Kill a container: `docker container rm -f {cid}`
+. Show the replicas in service: `docker service ls`
+. Show how desired vs actual is reconciled: `docker service ls`
 
 === Node failure
 
 . Show the list of nodes: `docker-machine ls`
-. Stop a worker node: `docker-machine stop worker3`
-. Show how desired vs actual is reconciled: `docker container ls`
+. Stop a node where the container is running: `docker-machine stop <node-name>`
+. Show the list of nodes: `docker-machine ls`
+. Show the replicas in service: `docker service ls`
+. Show how desired vs actual is reconciled: `docker service ls`
 
 == 4.5 Scaling and rolling update of service
 
