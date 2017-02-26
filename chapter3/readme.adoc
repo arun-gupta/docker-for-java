@@ -2,13 +2,15 @@
 
 == 3.1 Introduction to Docker Compose
 
-. Talk through slides
+Slides
+
 . Installed as part of Docker Toolbox or github.com/docker/compose/releases
 . `docker-compose -v`
 . `docker-compose --help`. Explain `up`, `ps`, `down`, `scale`, `restart`, `port`
 
 == 3.2 Docker Compose file
 
+. Create a directory `helloweb`
 . Sample `docker-compose.yml`
 
 ```
@@ -22,6 +24,7 @@ services:
       - 8080:8080
 ```
 
+. Talk about how `deployments` directory is automatically created
 . Explain `web`, `image`, `volumes, `ports`
 . Compare with Docker CLI
 
@@ -36,6 +39,8 @@ docker-compose down
 ```
 
 === 3.3 Multi-container application
+
+. Create a directory `travel`
 
 ```
 version: '3'
@@ -64,7 +69,7 @@ services:
 . Start application: `docker-compose up -d`
 . Show logs: `docker-compose logs -f`
 . Access application: `curl http://localhost:8080/airlines/resources/airline`
-
+. Shutdown application: `docker-compose down`
 
 == 3.4 Docker Compose options
 
