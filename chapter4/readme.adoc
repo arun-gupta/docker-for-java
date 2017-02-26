@@ -178,6 +178,6 @@ services:
 
 === 4.8 Node maintenance, label/constraints, global service
 
-Slides
+Slides only
 
 
