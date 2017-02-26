@@ -157,7 +157,7 @@ Slides only
 . Docker image name format: `<registry>/repo_name:tag`
 .. Default value of `<registry>` is `docker.io`
 
-=== Dockerfile
+==== Dockerfile
 
 Use Dockerfile:
 
@@ -167,19 +167,19 @@ FROM ubuntu:latest
 CMD echo "This is v1"
 ```
 
-=== Image with no name or tag
+==== Image with no name or tag
 
 . Build image: `docker image build .`
 . List image: Use `docker image ls` to show the list of images, particular `<none>:<none>` for this image
 . Run container: `docker container run <image-id>`, have no name
 
-=== Image with no name and default `latest` tag
+==== Image with no name and default `latest` tag
 
 . Build image: `docker image build -t helloworld .`
 . List image: `docker image ls`, show default `<none>:<none>` is gone, `latest` tag is created
 . Run container: `docker container run helloworld` and `docker container run helloworld:latest`
 
-=== Image with name and explicit tag
+==== Image with name and explicit tag
 
 . Remove image with `latest` tag: `docker image rm -f helloworld`
 . Build image: `docker image build -t helloworld:1 .`
@@ -187,12 +187,12 @@ CMD echo "This is v1"
 . Run container: `docker container run helloworld:1`
 . Run `latest` container: `docker container run helloworld` and `docker container run helloworld:latest`
 
-=== Tag versioned image with `latest` tag
+==== Tag versioned image with `latest` tag
 . Tag image: `docker image tag helloworld:1 helloworld:latest`
 . List images: `docker image ls`, show both tags are available
 . Run `latest` container (now works): `docker container run helloworld` and `docker container run helloworld:latest`
 
-=== Is `latest` really latest?
+==== Is `latest` really latest?
 
 Use Dockerfile:
 
@@ -208,7 +208,7 @@ CMD echo "This is v2"
 . Tag v2 to `latest`: `docker image tag helloworld:2 helloworld:latest`
 . Run container: `docker container run helloworld` shows v2 now
 
-=== Push image to Docker Hub
+==== Push image to Docker Hub
 
 . Push the image without namespace
 .. `docker push hellojava:latest` and show the error
