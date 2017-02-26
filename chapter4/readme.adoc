@@ -119,10 +119,13 @@ Slides
 === Node failure
 
 . Show the list of nodes: `docker-machine ls`
+. Show the services: `docker-machine ssh manager1 "docker service ls"`
+. Show the node where containers are running: `docker-machine ssh manager1 "docker service ps web"`
 . Stop a node where the container is running: `docker-machine stop <node-name>`
 . Show the list of nodes: `docker-machine ls`
-. Show the replicas in service: `docker service ls`
+. Show the services: `docker-machine ssh manager1 "docker service ls"`
 . Show how desired vs actual is reconciled: `docker service ls`
+. Show how container is started on a different node: `docker service ps web`
 
 == 4.5 Scaling and rolling update of service
 
