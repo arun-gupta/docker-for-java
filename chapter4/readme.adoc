@@ -2,10 +2,12 @@
 
 == 4.1 Introduction to Swarm mode
 
-Slides only
+Slides
 
 . Single node swarm: `docker swarm init`
+. Show options: `docker swarm --help`
 . Show information: `docker info`
+. Leave swarm: `docker swarm leave` and `docker swarm leave -f`
 
 == 4.2 Create multi-node Swarm mode cluster using Docker Machine
 
