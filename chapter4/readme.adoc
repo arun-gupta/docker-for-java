@@ -101,13 +101,11 @@ Slides
 . Create a replicated service: `docker service create --name web --replicas 3 -p 8080:8080 jboss/wildfly`
 . List service and replicas: `docker service ls`
 . Inspect service: `docker service inspect web`
-. List containers: `docker ssh manager1 "docker container ls"`
+. List containers: `docker service ps web`
 
 == 4.4 Container or Node failure
 
 Slides
-
-To be shown with Docker Machine cluster
 
 === Container failure
 
