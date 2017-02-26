@@ -77,7 +77,7 @@ Talk through slides
 
 https://blog.couchbase.com/stateful-docker-containers-portworx-couchbase/
 
-Setup EC2 instance:
+Pre setup EC2 instance:
 
 . Ubuntu 14.04, `m3.medium`
 .. Add `8091` to inbound rules
@@ -90,6 +90,8 @@ Setup EC2 instance:
 Follow steps from the blog
 
 == 5.4 Monitoring Docker using CLI
+
+Talk through slides
 
 === Docker CLI
 
@@ -164,9 +166,7 @@ docker run \
 . Select documents from the bucket `select * from docker;`
 . Show dashboard again
 
-== 5.6 Monitoring Docker using DUCP and Sysdig
-
-=== DUCP
+== 5.6 Monitoring Docker using Sysdig
 
 === Sysdig
 
