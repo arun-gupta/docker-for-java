@@ -15,6 +15,7 @@ Slides
 
 . `docker-machine -v`
 . Pre-create 6 Docker Machines using `swarm-machines.sh`
+. Show list of machines: `docker-machine ls`
 . Initialize swarm mode on `manager`:
 +
 ```
@@ -74,7 +75,6 @@ docker-machine ssh worker2 \
         $(docker-machine ip manager1)"
 ```
 +
-. Show list of nodes: `docker-machine ssh manager1 "docker node ls"`
 . Worker 3 join cluster:
 +
 ```
@@ -112,6 +112,8 @@ Slides
 
 Slides
 
+To be shown with Docker Machine cluster
+
 ==== Container failure
 
 . Show the list of containers: `docker container ls`
@@ -127,6 +129,8 @@ Slides
 === 4.6 Scaling and rolling update of service
 
 Slides
+
+To be shown with Docker Machine cluster
 
 ==== Scale service
 
