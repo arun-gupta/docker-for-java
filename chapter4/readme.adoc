@@ -89,55 +89,47 @@ docker-machine ssh worker3 \
 . Show list of nodes: `docker-machine ssh manager1 "docker node ls"`
 . Show cluster information: `docker-machine ssh manager1 "docker info"`
 
-== 4.3 Create multi-node Swarm mode cluster on AWS/Azure
+== 4.3 Deploying services to Swarm mode
 
 Slides
 
-. Launch the template and explain the creation and parameters
-. Setup SSH tunnel: `ssh -NL localhost:2374:/var/run/docker.sock docker@<master>`
-. Show cluster information: `docker -H localhost:2374 info`
-
-=== 4.4 Deploying services to Swarm mode
-
-Slides
-
-==== Create service
+=== Create service
 
 . Create a replicated service: `docker service create --name web --replicas 3 -p 8080:8080 jboss/wildfly`
 . List service and replicas: `docker service ls`
 . Inspect service: `docker service inspect web`
 . List containers: `docker container ls`
 
-=== 4.5 Container or Node failure
+== 4.4 Container or Node failure
 
 Slides
 
 To be shown with Docker Machine cluster
 
-==== Container failure
+=== Container failure
 
 . Show the list of containers: `docker container ls`
 . Kill a container: `docker container rm {cid}`
 . Show how desired vs actual is reconciled: `docker container ls`
 
-==== Node failure
+=== Node failure
 
 . Show the list of nodes: `docker-machine ls`
 . Stop a worker node: `docker-machine stop worker3`
 . Show how desired vs actual is reconciled: `docker container ls`
 
-=== 4.6 Scaling and rolling update of service
+== 4.5 Scaling and rolling update of service
 
 Slides
 
 To be shown with Docker Machine cluster
 
-==== Scale service
+=== Scale service
 
 . Scale service: `docker service scale web=6`
 . List service and replicas: `docker service ls`
 
-==== Rolling update of service
+=== Rolling update of service
 
 . Create 6 replicas of a service: `docker service create --name webapp --replicas 6 -p 8080:8080 arungupta/wildfly-app:1`
 . Check service: `docker service ls`
@@ -147,7 +139,7 @@ To be shown with Docker Machine cluster
 . Check status every 5 secs: `docker service ps webapp`
 . Access the application http://192.168.99.100:8080/app/index.jsp and show red background
 
-=== 4.7 Multi-container application on multi-host cluster
+== 4.6 Multi-container application on multi-host cluster
 
 Only to be used with Docker for AWS:
 
@@ -180,8 +172,15 @@ services:
 . `docker service logs webapp_web` - only works on experimental, verified using `docker info`
 . Access the application `curl -v http://localhost:8080/airlines/resources/airline`
 
-=== 4.8 Node maintenance, label/constraints, global service
+== 4.7 Node maintenance, label/constraints, global service
 
 Slides only
 
+== 4.8 Create multi-node Swarm mode cluster on AWS/Azure
+
+Slides
+
+. Launch the template and explain the creation and parameters
+. Setup SSH tunnel: `ssh -NL localhost:2374:/var/run/docker.sock docker@<master>`
+. Show cluster information: `docker -H localhost:2374 info`
 
