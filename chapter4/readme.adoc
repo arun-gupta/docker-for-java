@@ -182,7 +182,7 @@ services:
 . `docker service ps webapp_web` - show the node where the container is running
 . `docker service ps webapp_db` - show the node where the container is running
 . `docker service logs webapp_web` - only works on experimental, verified using `docker info`
-. Access the application `curl -v http://localhost:8080/airlines/resources/airline`
+. Access the application `curl -v http://192.168.99.100:8080/airlines/resources/airline`
 
 == 4.7 Node maintenance, label/constraints, global service
 
