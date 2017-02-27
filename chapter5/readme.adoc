@@ -2,7 +2,11 @@
 
 == 5.1 Couchbase cluster using services
 
+Slides
+
 . Show how Docker image was created: https://github.com/arun-gupta/docker-images/tree/master/couchbase
+
+. Initialize swarm mode: `docker swarm init`
 . Create overlay network:
 +
 ```
@@ -25,7 +29,8 @@ docker service create \
 ```
 +
 . List the services: `docker service ls`
-. Show Couchbase Web Console at http://localhost:8091
+. Show logs: `docker service couchbase-master logs -f`
+. Show Couchbase Web Console at http://localhost:8091, show `Server Nodes` tab
 . Create worker service:
 +
 ```
@@ -39,22 +44,23 @@ docker service create \
   arungupta/couchbase
 ```
 +
-. Show logs: `docker service logs couchbase-worker`
 . Show services: `docker service ls`
 .. Talk about experimental release
+. Show logs: `docker service logs couchbase-worker -f`
 . Show Couchbase Web Console again and highlight `Pending Rabalance` tab
 . Click on `Rebalance` to rebalance the cluster
 . Scale the cluster: `docker service scale couchbase-worker=2`
 . Show services: `docker service ls`
 . Show Couchbase Web Console again and highlight `Pending Rabalance` tab
-. Remove the services: `docker service rm couchbase-worker couchbase-service`
+. Remove the services: `docker service rm couchbase-master couchbase-worker`
+. Remove the network: `docker network rm couchbase`
 
 == 5.2 Persistent Storage with Docker containers
 
 === Implicit per-container storage
 
 . Terminal1: Run Couchbase container: `docker container run -d --name db arungupta/couchbase`
-. Check volume mounts: `docker inspect --format '{{json .Mounts }}' db  | jq`
+. Check volume mounts: `docker container inspect --format '{{json .Mounts }}' db  | jq`
 .. Show `/opt/couchbase/var` is mapped to the implicit storage
 . Check the mounted volume: `docker container inspect --format='{{range .Mounts}}{{.Source}}{{end}}' db`
 . Terminal2: Log into Docker for Mac VM:
