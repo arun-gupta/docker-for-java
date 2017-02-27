@@ -66,7 +66,7 @@ docker service create \
 . Terminal2: Log into Docker for Mac VM:
 +
 ```
-docker run -it --privileged --pid=host debian nsenter -t 1 -m -u -n -i sh
+docker container run -it --privileged --pid=host debian nsenter -t 1 -m -u -n -i sh
 ```
 +
 .. `debian` image has `nsenter`
@@ -94,7 +94,7 @@ docker container run \
   arungupta/couchbase
 ```
 +
-. Check the volume mount again: `docker inspect --format '{{json .Mounts }}' db  | jq`
+. Check the volume mount again: `docker container inspect --format '{{json .Mounts }}' db  | jq`
 .. Show how the newly created volume is used here
 . Terminate the container: `docker container rm -f db`
 . Delete the volume explicitly: `docker volume rm my_couchbase`
@@ -112,7 +112,7 @@ docker container run \
   arungupta/couchbase
 ```
 +
-. Check volume mounts: `docker inspect --format '{{json .Mounts }}' db  | jq`
+. Check volume mounts: `docker container inspect --format '{{json .Mounts }}' db  | jq`
 .. Show `/opt/couchbase/var` is mapped to the explicit directory
 . Show data in `~/couchbase`
 . Login to Couchbase Web Console at http://localhost:8091
@@ -129,7 +129,7 @@ Talk through slides
 
 ==== EC2 instance
 
-. Ubuntu 14.04, `m3.medium`
+. Ubuntu 14.04, `m3.large`
 .. Add `8091` to inbound rules
 . Login to EC2 instance: `ssh -i ~/.ssh/arun-cb-west1.pem ubuntu@<public-ip>`
 . Update: `sudo apt-get update`
@@ -140,15 +140,16 @@ Talk through slides
 ==== AWS EBS Volume
 
 . Create 10GB EBS volume
-. Get instance id from the EC2 console
 . Attach the volume to EC2 instance using instance id
 
 ==== Px-dev
 
+In EC2 instance:
+
 . Create `etcd`:
 +
 ```
-docker run -v \
+docker container run -v \
   /data/varlib/etcd \
   -p 4001:4001 \
   -d \
@@ -156,11 +157,11 @@ docker run -v \
 ```
 +
 . Make root mounted volumes shareable: `sudo mount --make-shared /`
-. Login to EC2 instance, use `lsblk` to check that the volume is attached to EC2 instance
+. Use `lsblk` to check that the volume is attached to EC2 instance
 . Start `px-dev` container:
 +
 ```
-docker run \
+docker container run \
   --restart=always \
   --name px \
   -d \
@@ -192,6 +193,7 @@ docker run \
 .. `etcd` container
 .. `px-dev` container
 
+. List the volumes: `docker volume ls`
 . Check the status of attached volumes that are available to Portworx using `sudo /opt/pwx/bin/pxctl status`
 . Create a Docker volume:
 +
@@ -199,7 +201,7 @@ docker run \
 docker volume create -d pxd -o size=10G -o fs=ext4 --name cbvol
 ```
 +
-. List the volumes: `docker volume ls`
+. List the volumes: `docker volume ls` and show newly created volume
 . Create a Couchbase container with Portworx volume:
 +
 ```
@@ -231,17 +233,23 @@ docker container run \
 +
 . Login to Couchbase Web Console and show that the bucket still exists
 
+=== Cleanup
+
+. Detach volume
+. Delete volume
+. Terminate EC2 instance
+
 == 5.4 Monitoring Docker using CLI
 
 Talk through slides
 
 === Docker CLI
 
-. `docker container stats` - You can use the `docker stats` command to live stream a container’s runtime metrics. The command supports CPU, memory usage, memory limit, and network IO metrics.
+. `docker container stats` - You can use the `docker container stats` command to live stream a container’s runtime metrics. The command supports CPU, memory usage, memory limit, and network IO metrics.
 . See the list of running containers using `docker container ls` and show stats for one container only
 . `docker container stats <name>`
-. `docker stats --format "{{.Container}}: {{.CPUPerc}}"`
-. `docker stats --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}"`
+. `docker container stats --format "{{.Container}}: {{.CPUPerc}}"`
+. `docker container stats --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}"`
 . `docker container stats --no-stream`
 
 === Docker Remote API
@@ -338,19 +346,6 @@ docker run \
 ```
 +
 . Refresh the dashboard
-. Connect CBQ: 
-+
-```
-docker run \
-  -it \
-  --link db:db \
-  arungupta/couchbase \
-  cbq \
-  -u Administrator \
-  -p password \
-  --engine http://db:8093
-```
-+
 . Show Couchbase Web Console at http://localhost:8091
 . Create a new bucket `docker`
 . Create primary index in Query tab: `create primary index on docker;`
