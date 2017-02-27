@@ -153,8 +153,9 @@ Slides
 
 == 4.6 Multi-container application on multi-host cluster
 
-Only to be used with Docker for AWS:
-
+. Login to `manager1`: `docker-machine ssh manager1`
+. Create a new file `docker-compose.yml` and use the following content:
++
 ```
 version: '3'
 services:
@@ -175,13 +176,17 @@ services:
       - 8093:8093
       - 11210:11210
 ```
-
-. `docker stack deploy --compose-file=docker-compose.yml webapp`
++
+. Deploy: `docker stack deploy --compose-file=docker-compose.yml webapp`
 . `docker stack ls`
 . `docker service ls`
 . `docker service ps webapp_web` - show the node where the container is running
 . `docker service ps webapp_db` - show the node where the container is running
-. `docker service logs webapp_web` - only works on experimental, verified using `docker info`
+. See the logs of `web` service
+.. Log in to the node where container is running: `docker-machine ssh <node-name>`
+.. See the list of containers: `docker container ls`
+.. View logs: `docker container logs <cid>`
+.. Alternatively (only on experimental) `docker service logs webapp_web`
 . Access the application `curl -v http://192.168.99.100:8080/airlines/resources/airline`
 
 == 4.7 Node maintenance, label/constraints, global service
