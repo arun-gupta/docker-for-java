@@ -310,6 +310,7 @@ docker run \
   prom/prometheus
 ```
 +
+. Show the dashboard at http://localhost:9090
 . Show the list of metrics
 . Choose `http_request_duration_microseconds`
 . Switch from `Console` to `Graph`
