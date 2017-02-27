@@ -254,6 +254,54 @@ Talk through slides
 
 === Prometheus endpoint
 
+==== Default metrics
+
+. Update daemon settings:
++
+```
+{
+  "metrics-addr" : "0.0.0.0:1337",
+  "experimental" : true
+}
+```
++
+. Restart Docker
+. Show the list of metrics at `curl http://localhost:1337/metrics`
+. Show the list of engine metrics at `curl http://localhost:1337/metrics | grep engine`
+
+==== Prometheus node scraper
+
+. Create a new directory `prometheus` and change directory
+. Create `prometheus.yml`
++
+```
+# A scrape configuration scraping a Node Exporter and the Prometheus server
+# itself.
+scrape_configs:
+  # Scrape Prometheus itself every 5 seconds.
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+```
++
+. Start Prometheus container:
++
+```
+docker run \
+  -d \
+  --name metrics \
+  -p 9090:9090 \
+  -v `pwd`/prometheus.yml:/etc/prometheus/prometheus.yml \
+  prom/prometheus
+```
++
+. Show the list of metrics
+. Choose `http_request_duration_microseconds`
+. Switch from `Console` to `Graph`
+.. Change the duration from `1h` to `5m`
+. Stop the container: `docker container rm -f metrics`
+
 === cAdvisor
 
 . Run `cAdvisor`
@@ -270,6 +318,7 @@ docker run \
 ```
 +
 . Show dashboard at http://localhost:8080
+.. All Docker containers are in `/docker` sub-container
 .. Explain CPU and Memory isolation
 .. Explain CPU, Memory, Network, Filesystem usage
 . Start Couchbase container:
@@ -282,7 +331,7 @@ docker run \
   arungupta/couchbase
 ```
 +
-. Show dashboard again and dig into the sub-container
+. Refresh the dashboard
 . Connect CBQ: 
 +
 ```
@@ -300,11 +349,5 @@ docker run \
 . Create a new bucket `docker`
 . Create primary index in Query tab: `create primary index on docker;`
 . Select documents from the bucket `select * from docker;`
-. Show dashboard again
-
-== 5.6 Monitoring Docker using Sysdig
-
-=== Sysdig
-
-Follow the steps from https://github.com/arun-gupta/labs/blob/sysdig/developer-tools/java/chapters/ch10-sysdig.adoc
+. Refresh dashboard again
 
