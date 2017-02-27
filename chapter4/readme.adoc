@@ -131,12 +131,15 @@ Slides
 
 Slides
 
-To be shown with Docker Machine cluster
-
 === Scale service
 
+. SSH to `manager`: `docker-machine ssh manager1`
 . Scale service: `docker service scale web=6`
 . List service and replicas: `docker service ls`
+. Show node where containers are running: `docker service ps web`
+. Use filters to restrict output: `docker service ps -f "desired-state=running" web`
+. Shutdown service: `docker service rm web`
+. Show the list of services: `docker service ls`
 
 === Rolling update of service
 
