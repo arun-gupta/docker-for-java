@@ -190,6 +190,7 @@ services:
 .. View logs: `docker container logs <cid>`
 .. Alternatively (only on experimental) `docker service logs webapp_web`
 . Access the application `curl -v http://$(docker-machine ip <node>):8080/airlines/resources/airline`
+. Remove stack: `docker stack rm webapp`
 
 == 4.7 Node maintenance, label/constraints, global service
 
