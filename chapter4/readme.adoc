@@ -13,6 +13,8 @@ Slides
 
 Slides
 
+Complete script to create the cluster: `swarm-cluster.sh`
+
 . `docker-machine -v`
 . Pre-create 6 Docker Machines using `swarm-machines.sh`
 . Show list of machines: `docker-machine ls`
@@ -88,8 +90,6 @@ docker-machine ssh worker3 \
 +
 . Show list of nodes: `docker-machine ssh manager1 "docker node ls"`
 . Show cluster information: `docker-machine ssh manager1 "docker info"`
-
-Alternatively, you can use `swarm-cluster-create.sh` script to create the cluster.
 
 == 4.3 Deploying services to Swarm mode
 
