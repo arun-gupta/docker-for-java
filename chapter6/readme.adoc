@@ -1,0 +1,116 @@
+= Chapter 6
+
+== 6.1 Monitoring Docker using CLI
+
+Talk through slides
+
+=== Docker CLI
+
+. `docker container stats` - You can use the `docker container stats` command to live stream a container’s runtime metrics. The command supports CPU, memory usage, memory limit, and network IO metrics.
+. See the list of running containers using `docker container ls` and show stats for one container only
+. `docker container stats <name>`
+. `docker container stats --format "{{.Container}}: {{.CPUPerc}}"`
+. `docker container stats --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}"`
+. `docker container stats --no-stream`
+
+=== Docker Remote API
+
+. `curl --unix-socket /var/run/docker.sock http://docker/containers/<name>/stats`
+
+=== Events
+
+. `docker system events`
+. In a different tab, kill existing container using `docker container rm -f <name>`
+. Show the list of events
+. Start a new container
+. Show the list of events
+
+== 6.3 Monitoring Docker using Prometheus and cAdvisor
+
+=== Prometheus endpoint
+
+==== Default metrics
+
+. Update daemon settings:
++
+```
+{
+  "metrics-addr" : "0.0.0.0:1337",
+  "experimental" : true
+}
+```
++
+. Restart Docker
+. Show the list of metrics at `curl http://localhost:1337/metrics`
+. Show the list of engine metrics at `curl http://localhost:1337/metrics | grep engine`
+
+==== Prometheus node scraper
+
+. Create a new directory `prometheus` and change directory
+. Create `prometheus.yml`
++
+```
+# A scrape configuration scraping a Node Exporter and the Prometheus server
+# itself.
+scrape_configs:
+  # Scrape Prometheus itself every 5 seconds.
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+```
++
+. Start Prometheus container:
++
+```
+docker run \
+  -d \
+  --name metrics \
+  -p 9090:9090 \
+  -v `pwd`/prometheus.yml:/etc/prometheus/prometheus.yml \
+  prom/prometheus
+```
++
+. Show the dashboard at http://localhost:9090
+. Show the list of metrics
+. Choose `http_request_duration_microseconds`
+. Switch from `Console` to `Graph`
+.. Change the duration from `1h` to `5m`
+. Stop the container: `docker container rm -f metrics`
+
+=== cAdvisor
+
+. Run `cAdvisor`
++
+```
+docker run \
+  -d \
+  --name=cadvisor \
+  -p 8080:8080 \
+  --volume=/var/run:/var/run:rw \
+  --volume=/sys:/sys:ro \
+  --volume=/var/lib/docker/:/var/lib/docker:ro \
+  google/cadvisor:latest
+```
++
+. Show dashboard at http://localhost:8080
+.. All Docker containers are in `/docker` sub-container
+.. Explain CPU and Memory isolation
+.. Explain CPU, Memory, Network, Filesystem usage
+. Start Couchbase container:
++
+```
+docker run \
+  -d \
+  --name db \
+  -p 8091-8093:8091-8093 \
+  arungupta/couchbase
+```
++
+. Refresh the dashboard
+. Show Couchbase Web Console at http://localhost:8091
+. Create a new bucket `docker`
+. Create primary index in Query tab: `create primary index on docker;`
+. Select documents from the bucket `select * from docker;`
+. Refresh dashboard again
+
