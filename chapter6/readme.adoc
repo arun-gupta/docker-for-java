@@ -6,6 +6,7 @@ Talk through slides
 
 === Docker CLI
 
+. Run a container: `docker container run -d --name db arungupta/couchbase`
 . `docker container stats` - You can use the `docker container stats` command to live stream a container’s runtime metrics. The command supports CPU, memory usage, memory limit, and network IO metrics.
 . See the list of running containers using `docker container ls` and show stats for one container only
 . `docker container stats <name>`
@@ -20,9 +21,9 @@ Talk through slides
 === Events
 
 . `docker system events`
-. In a different tab, kill existing container using `docker container rm -f <name>`
+. In a different tab, kill a running container using `docker container rm -f db`
 . Show the list of events
-. Start a new container
+. Start a new container: `docker container run -d jboss/wildfly`
 . Show the list of events
 
 == 6.3 Monitoring Docker using Prometheus and cAdvisor
