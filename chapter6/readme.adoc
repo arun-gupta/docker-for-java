@@ -16,15 +16,15 @@ Talk through slides
 
 === Docker Remote API
 
-. `curl --unix-socket /var/run/docker.sock http://docker/containers/<name>/stats`
+. `curl --unix-socket /var/run/docker.sock http://localhost/containers/<name>/stats`
 
 === Events
 
-. `docker system events`
-. In a different tab, kill a running container using `docker container rm -f db`
-. Show the list of events
-. Start a new container: `docker container run -d jboss/wildfly`
-. Show the list of events
+. In one terminal (T1), `docker system events`
+. In a different terminal (T2), kill a running container using `docker container rm -f db`
+. Show the list of events in T1
+. Start a new container in T2: `docker container run -d jboss/wildfly`
+. Show the list of events in T1
 
 == 6.3 Monitoring Docker using Prometheus and cAdvisor
 
