@@ -203,6 +203,8 @@ Slides
 . Go to docker.com/getdocker
 . Launch the template and explain the creation and parameters
 . SSH into instance: `ssh -i ~/.ssh/arun-docker.pem docker@<master-ip>`
+. Show more details: `docker info`
+. Show node listing: `docker node ls`
 . Setup SSH tunnel: `ssh -i ~/.ssh/arun-docker.pem -NL localhost:2374:/var/run/docker.sock docker@<master-ip>`
 . Show cluster information: `docker -H localhost:2374 info`
 
