@@ -55,7 +55,11 @@ docker service create \
 . Remove the services: `docker service rm couchbase-master couchbase-worker`
 . Remove the network: `docker network rm couchbase`
 
-== 5.2 Persistent Storage with Docker containers
+== 5.2 Persistent Containers Overview
+
+Slides only
+
+== 5.3 Persistent Containers
 
 === Implicit per-container storage
 
@@ -121,9 +125,11 @@ docker container run \
 . Restart the container using previous command
 . Access Couchbase Web Console and show that the bucket still exists
 
-== 5.3 Docker Volume Plugin
+== 5.4 Docker Volume Plugin
 
-Talk through slides
+Slides only
+
+== 5.5 Docker Volume Plugin in practice
 
 === Pre setup 
 

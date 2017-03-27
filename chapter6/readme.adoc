@@ -26,7 +26,7 @@ Talk through slides
 . Start a new container in T2: `docker container run -d jboss/wildfly`
 . Show the list of events in T1
 
-== 6.3 Monitoring Docker using Prometheus and cAdvisor
+== 6.2 Monitor Docker with Prometheus
 
 === Prometheus endpoint
 
@@ -79,7 +79,7 @@ docker run \
 .. Change the duration from `1h` to `5m`
 . Stop the container: `docker container rm -f metrics`
 
-=== cAdvisor
+== 6.3 Monitor Docker with cAdvisor
 
 . Run `cAdvisor`
 +
