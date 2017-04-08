@@ -48,7 +48,7 @@ Access WildFly home page in browser on 8080
 ```
 docker container rm -f web
 docker container run -d --name web -p 8080:8080 -v `pwd`/webapp.war:/opt/jboss/wildfly/standalone/deployments/webapp.war jboss/wildfly
-docker container logs web
+docker container logs web -f
 curl http://localhost:8080/webapp/resources/persons
 ```
 
