@@ -14,8 +14,6 @@ docker container stop {name}
 docker container rm {name}
 docker container run -d --name web jboss/wildfly
 docker container ls
-docker container stop web
-docker container start web
 docker container rm -f web
 docker container run -it --name web jboss/wildfly bash
 ```
@@ -27,6 +25,7 @@ docker container run -it --name web jboss/wildfly bash
 ```
 docker container run -d --name web -P jboss/wildfly
 docker container run ls
+docker container logs web
 ```
 
 Access WildFly home page in browser on the exposed port
@@ -58,7 +57,7 @@ curl http://localhost:8080/webapp/resources/persons
 
 . Dockerfile syntax
 . Create a new directory
-. Explain build context, `.dockerignore`
+. Explain build context
 
 ```
 FROM ubuntu
@@ -67,10 +66,12 @@ CMD echo "Hello world"
 ```
 
 . Build image: `docker image build -t helloworld .`
+. Explain `.dockerignore`
 . List image: `docker image ls`
+. History of image: `docker image history helloworld`
 . Run container: `docker container run helloworld`
-. Explain `--squash`
 . Explain `--compress`
+. Explain `--squash`
 
 === 2.5 Create first Java Docker image
 
@@ -106,7 +107,7 @@ COPY webapp.war /opt/jboss/wildfly/standalone/deployments/webapp.war
 ```
 
 . Build image: `docker image build -t helloweb .`
-. Run container: `docker container run -d --name web -p 8080:8080 helloweb`
+. Run container: `docker container run --name web -p 8080:8080 -d helloweb`
 . Access application: `curl http://localhost:8080/webapp/resources/persons`
 
 === 2.7 Run JAR files from the Docker image
