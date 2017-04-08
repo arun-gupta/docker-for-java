@@ -4,8 +4,8 @@
 
 Slides
 
-. Single node swarm: `docker swarm init`
 . Show options: `docker swarm --help`
+. Single node swarm: `docker swarm init`
 . Show information: `docker info`
 . Leave swarm: `docker swarm leave` and `docker swarm leave -f`
 
