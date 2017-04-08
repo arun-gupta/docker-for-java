@@ -81,7 +81,7 @@ CMD java -version
 ```
 
 . Build image: `docker image build -t hellojava .`
-. List image and show the size: `docker image ls hellojava`
+. List image and show the size: `docker image ls`
 . Run container: `docker container run hellojava`
 
 ```
@@ -92,7 +92,7 @@ CMD java -version
 
 . Build image: `docker image build -t hellojava:2 .`
 . Talk about image tagging
-. List image and show/compare the size: `docker image ls hellojava:2`
+. List image and show/compare the size: `docker image ls`
 . Run container: `docker container run hellojava:2`
 
 === 2.6 Copy files in the Docker image
