@@ -92,7 +92,7 @@ services:
      - 80:8080
 ```
 
-. Run application: `docker-compose --verbose up -d`. Explain how the files picked are shown.
+. Run application: `docker-compose up -d`.
 . App now accessible at curl http://localhost/webapp/resources/persons
 . Shutdown using `docker-compose down`
 
