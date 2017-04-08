@@ -11,7 +11,7 @@ Slides
 == 3.2 Docker Compose file
 
 . Create a directory `helloweb`
-. Sample `docker-compose.yml`
+. Create Compose file in `helloweb` directory: `vi docker-compose.yml`
 
 ```
 version: '3'
@@ -25,7 +25,7 @@ services:
 ```
 
 . Talk about how `deployments` directory is automatically created
-. Explain `web`, `image`, `volumes, `ports`
+. Explain `web`, `image`, `volumes`, `ports`
 . Compare with Docker CLI
 
 Run the commands:
@@ -33,7 +33,7 @@ Run the commands:
 ```
 docker-compose up -d
 docker-compose logs -f
-cp ~/workspaces/docker-for-java/chapter2/webapp.war ~/deployments
+cp docker-for-java-master/chapter2/webapp.war ~/deployments
 curl http://localhost:8080/webapp/resources/persons
 docker-compose down
 ```
