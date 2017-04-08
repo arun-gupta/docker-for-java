@@ -107,7 +107,7 @@ COPY webapp.war /opt/jboss/wildfly/standalone/deployments/webapp.war
 ```
 
 . Build image: `docker image build -t helloweb .`
-. Run container: `docker container run --name web -p 8080:8080 -d helloweb`
+. Run container: `docker container run -p 8080:8080 -d helloweb`
 . Access application: `curl http://localhost:8080/webapp/resources/persons`
 
 === 2.7 Run JAR files from the Docker image
