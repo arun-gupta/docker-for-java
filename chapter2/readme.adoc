@@ -168,6 +168,11 @@ FROM ubuntu:latest
 CMD echo "This is v1"
 ```
 
+==== Remove all images and containers
+
+. `docker image rm -f $(docker image ls -qa)`
+. `docker container rm -f $(docker container ls -aq)`
+
 ==== Image with no name or tag
 
 . Build image: `docker image build .`
@@ -182,13 +187,15 @@ CMD echo "This is v1"
 
 ==== Image with name and explicit tag
 
-. Remove image with `latest` tag: `docker image rm -f helloworld`
+. Remove all containers: `docker container rm -f $(docker container ls -aq)`
+. Remove image with `latest` tag: `docker image rm helloworld:latest`
 . Build image: `docker image build -t helloworld:1 .`
 . List image: `docker image ls`, show no `latest` tag
 . Run container: `docker container run helloworld:1`
 . Run `latest` container: `docker container run helloworld` and `docker container run helloworld:latest`
 
 ==== Tag versioned image with `latest` tag
+
 . Tag image: `docker image tag helloworld:1 helloworld:latest`
 . List images: `docker image ls`, show both tags are available
 . Run `latest` container (now works): `docker container run helloworld` and `docker container run helloworld:latest`
@@ -204,21 +211,19 @@ CMD echo "This is v2"
 ```
 
 . Build image: `docker image build -t helloworld:2 .`
-. Run container: `docker container run helloworld:2`
 . Run container: `docker container run helloworld` shows v1
 . Tag v2 to `latest`: `docker image tag helloworld:2 helloworld:latest`
 . Run container: `docker container run helloworld` shows v2 now
 
 ==== Push image to Docker Hub
 
-. Push the image without namespace
-.. Login to Docker: `docker login`
-.. `docker push helloworld:latest` and show the error
-. Push the image in namespace
-.. Tag image: `docker tag helloworld:latest arungupta/helloworld:latest`
-.. Push to Docker Hub: `docker image push arungupta/helloworld:latest`
+. Push the image without namespace and show the error: `docker image push helloworld:latest`
+. Tag image: `docker image tag helloworld:2 arungupta/helloworld:latest`
+. Login to Docker: `docker login`
+. Push to Docker Hub: `docker image push arungupta/helloworld:latest`
 . Push to local registry
-.. Run registry: `docker run -d -p 5000:5000 --restart always --name registry registry:2.6.0`
-.. Tag image for local registry: `docker tag helloworld:latest localhost:5000/arungupta/helloworld:latest`
-.. Push to local registry: `docker push localhost:5000/arungupta/helloworld:latest`
+.. Run registry: `docker container run -d -p 5000:5000 --restart always --name registry registry:2.6.0`
+.. Tag image for local registry: `docker image tag helloworld:latest localhost:5000/arungupta/helloworld:latest`
+.. Use `docker image ls` to show the list of images
+.. Push to local registry: `docker image push localhost:5000/arungupta/helloworld:latest`
 
