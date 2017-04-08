@@ -17,7 +17,7 @@ docker container ls
 docker container stop web
 docker container start web
 docker container rm -f web
-docker container run -it jboss/wildfly bash
+docker container run -it --name web jboss/wildfly bash
 ```
 
 == 2.3 Run Docker container (ports & volumes)
