@@ -120,11 +120,11 @@ COPY myapp/target/myapp-1.0-SNAPSHOT.jar /deployments/
 CMD java -jar /deployments/myapp-1.0-SNAPSHOT.jar
 ```
 
-. Create JAR file: `mvn package`
+. Create JAR file: `mvn -f myapp/pom.xml clean package`
 . Build image: `docker image build -t hellojava:3 .`
 . Run container: `docker container run hellojava:3`
 . Change Java application (change "Hello" to "Howdy")
-. Create new JAR file using `mvn package`
+. Create new JAR file using `mvn -f myapp/pom.xml clean package`
 . Build new Docker image: `docker image build -t hellojava:4 .`
 . Run new Docker container: `docker container run hellojava:4`
 . Show updated changes
