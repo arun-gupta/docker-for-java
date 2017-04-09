@@ -109,19 +109,22 @@ Slides
 
 === Container failure
 
-. SSH to `manager1`: `docker-machine ssh manager1`
-. See the nodes where containers are running: `docker service ps web`
+. In `manager1`, see the nodes where containers are running: `docker service ps web`
 . SSH to a node where the container is running. Show the list of containers: `docker container ls`
-. Kill a container: `docker container rm -f {cid}`
-. Show the replicas in service: `docker service ls`
-. Show how desired vs actual is reconciled: `docker service ls`
+. Exit out of `manager1`
+. Show the number of replicas: `docker-machine ssh manager1 "docker service ls"`
+. Kill a container: `docker-machine ssh <node> "docker container rm -f <cid>"`
+.. `<node>` is where the container is running
+.. `<cid>` is the id of the container
+. Show the replicas in service: `docker-machine ssh manager1 "docker service ls"`
+.. Show that only 2 replicas are running and reconciliation happens by swarm manger
 
 === Node failure
 
 . Show the list of nodes: `docker-machine ls`
-. Show the services: `docker-machine ssh manager1 "docker service ls"`
 . Show the node where containers are running: `docker-machine ssh manager1 "docker service ps web"`
-. Stop a node where the container is running: `docker-machine stop <node-name>`
+. Show number of replicas for the service: `docker-machine ssh manager1 "docker service ls"`
+. Stop a node where the container is running: `docker-machine stop <node>`
 . Show the list of nodes: `docker-machine ls`
 . Show the services: `docker-machine ssh manager1 "docker service ls"`
 . Show how desired vs actual is reconciled: `docker service ls`
