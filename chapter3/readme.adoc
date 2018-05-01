@@ -8,7 +8,7 @@ Slides
 . `docker-compose -v`
 . `docker-compose --help`. Explain `up`, `ps`, `down`, `scale`, `restart`, `port`
 
-== 3.2 Docker Compose file
+== 3.2 Docker Compose file!
 
 . Create a directory `helloweb`
 . Create Compose file in `helloweb` directory: `vi docker-compose.yml`
