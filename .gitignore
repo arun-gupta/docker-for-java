@@ -1,3 +1,5 @@
 **/target
 **/*.yml
 **/Dockerfile
+*.DS_Store
+.DS_Store
